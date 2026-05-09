@@ -42,7 +42,7 @@ Backend API project built using Node.js, Express.js, MySQL, Sequelize ORM, JWT A
 ## Clone Repository
 
 ```bash
-git clone YOUR_GITHUB_REPO_LINK
+git clone https://github.com/sourabhpor/seller-product-management-api.git
 ```
 
 ---
