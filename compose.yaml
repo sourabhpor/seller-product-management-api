@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+
+    container_name: node-task-app
+
+    ports:
+      - "5000:5000"
+
+    env_file:
+      - .env
+
+    depends_on:
+      - mysql
+
+    restart: always
+
+  mysql:
+    image: mysql:8
+
+    container_name: mysql-container
+
+    ports:
+      - "3307:3306"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: node_task
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    restart: always
+
+volumes:
+  mysql_data:

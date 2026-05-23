@@ -5,6 +5,7 @@ const {
   getProducts,
   deleteProduct,
   viewProductPDF,
+  sumBrandPrices,
 } = require("../controllers/product.controller");
 const authenticate = require("../middlewares/auth.middleware");
 const authorizeRoles = require("../middlewares/role.middleware");
@@ -20,6 +21,13 @@ router.post(
 );
 
 router.get("/list", authenticate, authorizeRoles(ROLES.SELLER), getProducts);
+
+router.get(
+  "/brand-price/:id",
+  authenticate,
+  authorizeRoles(ROLES.SELLER),
+  sumBrandPrices,
+);
 
 router.get(
   "/pdf/:id",

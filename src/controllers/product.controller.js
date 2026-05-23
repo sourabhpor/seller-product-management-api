@@ -249,9 +249,47 @@ const viewProductPDF = async (req, res) => {
   }
 };
 
+const sumBrandPrices = async (req, res) => {
+  try {
+    let totalPrice = 0;
+    const productId = req.params.id;
+
+    if (!productId) {
+      return errorResponse(res, "Product ID is required", 400);
+    }
+
+    const product = await Product.findOne({
+      where: {
+        id: productId,
+        sellerId: req.user.id,
+      },
+
+      include: [
+        {
+          model: Brand,
+        },
+      ],
+    });
+
+    if (!product) {
+      return errorResponse(res, "Product not found", 404);
+    }
+
+    for (const brand of product.Brands) {
+      totalPrice += Number(brand.price);
+    }
+
+    return successResponse(res, "Total Price Calculated Successfully", {
+      totalPrice,
+    });
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
 module.exports = {
   addProduct,
   getProducts,
   deleteProduct,
   viewProductPDF,
+  sumBrandPrices,
 };
